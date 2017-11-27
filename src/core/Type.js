@@ -1,7 +1,7 @@
 import Serializable from './Serializable'
-import {normalizeType} from './utils/normalize'
-import {copyHeaders} from './utils/applyHeaders'
-import urlOptions from './utils/urlOptions'
+import {normalizeType} from '../utils/normalize'
+import {copyHeaders} from '../utils/applyHeaders'
+import urlOptions from '../utils/urlOptions'
 
 class Type extends Serializable {
   static reopenClass(opt = {}) {

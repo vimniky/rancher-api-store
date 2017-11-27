@@ -1,4 +1,3 @@
-import TypeMixin from '../Type'
 import {copyHeaders} from '../utils/applyHeaders'
 import {normalizeType} from '../utils/normalize'
 

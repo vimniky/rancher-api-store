@@ -1,15 +1,15 @@
-import Serializable from './Serializable'
-import {normalizeType} from './utils/normalize'
-import {applyHeaders} from './utils/applyHeaders'
-import urlOptions from './utils/urlOptions'
 const merge = require('lodash/merge')
-import createHttp from './utils/createHttp'
+import Serializable from './Serializable'
+import {normalizeType} from '../utils/normalize'
+import {applyHeaders} from '../utils/applyHeaders'
+import urlOptions from '../utils/urlOptions'
+import createHttp from '../utils/createHttp'
 
 // buildin Models
-import Resource  from './models/Resource'
-import Error  from './models/Error'
-import Schema  from './models/Schema'
-import Collection  from './models/Collection'
+import Resource  from '../models/Resource'
+import Error  from '../models/Error'
+import Schema  from '../models/Schema'
+import Collection  from '../models/Collection'
 
 export const defaultMetaKeys = [
   'type',
@@ -46,7 +46,7 @@ class Store {
       this.neverMissing = neverMissing.slice()
     }
 
-    // Registering Core basic Models
+    // Registering build-in Models
     this.registerModel('schema', Schema)
     this.registerModel('resource', Resource)
     this.registerModel('collection', Collection)

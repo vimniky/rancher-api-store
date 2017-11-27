@@ -1,4 +1,4 @@
-import Type from '../Type'
+import Type from '../core/Type'
 
 class Resource extends Type {
   constructor(opt) {
