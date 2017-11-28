@@ -1,5 +1,5 @@
-const axios = require('axios')
-const merge = require('lodash/merge')
+import merge from 'lodash/merge'
+import axios from 'axios'
 
 export default function (options) {
   // See `https://github.com/mzabriskie/axios` for details

@@ -1,11 +1,11 @@
-const merge = require('lodash/merge')
+import merge from 'lodash/merge'
 import Serializable from './Serializable'
 import {normalizeType} from '../utils/normalize'
 import {applyHeaders} from '../utils/applyHeaders'
 import urlOptions from '../utils/urlOptions'
 import createHttp from '../utils/createHttp'
 
-// buildin Models
+// build-in Models
 import Resource  from '../models/Resource'
 import Error  from '../models/Error'
 import Schema  from '../models/Schema'
@@ -28,8 +28,29 @@ export const neverMissing = [
   'error',
 ]
 
+const PREFIX = 'store'
+let count = 0
+
 class Store {
-  constructor(opt = {}) {
+  static __stores = {}
+  constructor(name, opt) {
+
+    if (typeof name ==='string') {
+      const catchedStore = Store.__stores[name]
+      if(catchedStore) {
+        return catchedStore
+      }
+    } else {
+      if (typeof opt === 'undefined') {
+        opt = name || {}
+      }
+      name = `${PREFIX}-${count++}`
+    }
+
+    opt = opt || {}
+
+    Store.__stores[name] = this
+
     let {http, ...rest} = opt
     this.conf = merge({
       baseUrl: '/v2-beta',
@@ -40,6 +61,7 @@ class Store {
     if (!http) {
       http = createHttp()
     }
+
     this.http = http
 
     if (!this.neverMissing) {
