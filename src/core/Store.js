@@ -84,29 +84,29 @@ class Store {
   }
 
   modelFor(type) {
-    if (!this.modelMap) {
-      this.modelMap = {}
+    if (!this._modelMap) {
+      this._modelMap = {}
     }
-    let Model = this.modelMap[type]
+    let Model = this._modelMap[type]
     if (!Model) {
       console.log(`model for [${type}] not found, fallback to resource model`)
       Model = this.modelFor('resource')
     }
-    this.modelMap[type] = Model
+    this._modelMap[type] = Model
     return Model
   }
   registerModel(type, model) {
-    if (!this.modelMap) {
-      this.modelMap = {}
+    if (!this._modelMap) {
+      this._modelMap = {}
     }
-    this.modelMap[type] = model
+    this._modelMap[type] = model
   }
   unRegisterModel(type) {
-    const modelMap = this.modelMap
-    if (!modelMap || !modelMap[type]) {
+    const _modelMap = this._modelMap
+    if (!_modelMap || !_modelMap[type]) {
       return false
     }
-    modelMap[type] = null
+    _modelMap[type] = null
     return true
   }
 
