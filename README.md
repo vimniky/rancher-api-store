@@ -23,18 +23,18 @@ import {Store, Resource} from 'rancher-api-store'
 - CommonJS 
 
 ```js
-var {Store, Resource} = require('http-proxy')
+var {Store, Resource} = require('rancher-api-store')
 
 ```
 
 - Browser global
 
 ```html
-<script src="path/to/rancher-api-store/dist/index.js" ></script>
-
-<script>
-  console.log(apiStore.Store)
-</script>
+  <script src="path/to/rancher-api-store/dist/index.js" ></script>
+  
+  <script>
+  	console.log(apiStore.Store)
+  </script>
 ```
 
 **Develope**
