@@ -11,12 +11,43 @@ Storage adapter to [compatible APIs](http://github.com/rancher/api-spec).
   npm install rancher-api-store
 ```
 
+**Import**
+
+- ES6 module
+
+```js
+import {Store, Resource} from 'rancher-api-store'
+
+```
+
+- CommonJS 
+
+```js
+var {Store, Resource} = require('http-proxy')
+
+```
+
+- Browser global
+
+```html
+<script src="path/to/rancher-api-store/dist/index.js" ></script>
+
+<script>
+  console.log(apiStore.Store)
+</script>
+```
+
 **Develope**
 
 ```bash
   git clone git@github.com:vimniky/rancher-api-store.git
   cd rancher-api-store && npm install
   npm run dev
+
+  # link
+  cd rancher-api-store && npm link
+  cd yoru-project & npm link rancher-api-store
+  
 ```
 
 **Build**
@@ -24,6 +55,7 @@ Storage adapter to [compatible APIs](http://github.com/rancher/api-spec).
 ```bash
 npm run build
 ```
+
 
 **Getting started**
 
