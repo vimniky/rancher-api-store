@@ -3,22 +3,90 @@ Rancher API Store
 
 Storage adapter to [compatible APIs](http://github.com/rancher/api-spec).
 
-## Installation
+## Usage
 
+**Installation**
 
 ```bash
   npm install rancher-api-store
 ```
 
-## Usage
+**Develope**
+
+```bash
+  git clone git@github.com:vimniky/rancher-api-store.git
+  cd rancher-api-store && npm install
+  npm run dev
+```
+
+**Build**
+
+```bash
+npm run build
+```
+
+**Getting started**
+
+```javascript
+
+import {Store} from 'rancher-api-store'
+
+const store = new Store()
+
+yourStore.find('container').then(container => {
+  console.log(container)
+})
+
+```
+
+**Advanced**
+
+```javascript
+
+// models/Container.js
+import {Resource, Store} from 'rancher-api-store'
+
+// `Container` Model Should extend from the build-in `Resource` Model
+class Container extends Resource {
+  doSomething() {
+  	// ...
+  }
+}
+
+// stores.js
+import {Store} from 'rancher-api-store'
+
+const store = new Store('userStore', {
+  baseUrl: '/v2-bata',
+  
+  // whether schemas should be loaded upon store niitalization
+  loadSchemas: true, // default is false
+})
+
+store.registerModel('container', Container)
+
+// If the `Container` Model is registered,
+// it will be used to create the corresponding instances,
+// if not a fallback build-in `Resource` Model will be used behind the scenes.
+store.find('container').then(container => {
+	container.doSomething()
+})
+
+```
+
+## FQA
+
+
+## API
 
 ### Store
 
 The store performs all communication with the API service and maintains a single copy of all the resources that come back from it.  This ensures that changes to a resource in one place propagate propertly to other parts of your application that use the same resource.
 
-A property named `store` is automatically injected into all routes, controllers, and models on initialization.
 
 **Methods:**
+
+* `constructor([name] [,opt]):` `name` and `opt` are optional. basically, it is use to prevent from creating multiply store instance with the same name, if not passed, a uniq name will be generated every time your invoke `new Store()`.  `opt` are use to configure the created store instance's behavior.
 
 * `find(type [,id] [,options])`: Query API for records of `type`, optionally with `id` and other `options` like `filter` and `include`.  Returns a promise.
 
@@ -90,4 +158,5 @@ A collection is a model object representing an array of resources in the API.  I
 * `call(nameOfmethod, [...args])`. Call any array method on the collection. such as `collection.call('map', function(item, idx) {...})`
 
 * `.serialize()`: Returns a plain JavaScript array representation of the collection.
+
 
