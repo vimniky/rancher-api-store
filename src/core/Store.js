@@ -53,8 +53,8 @@ class Store {
 
     let {http, ...rest} = opt
     this.conf = merge({
-      baseUrl: '/v2-beta',
-      defaultTimeout: 30000,
+      baseURL: '/v2-beta',
+      timeout: 30000,
       defaultPageSize: 1000,
     }, rest)
 
@@ -351,7 +351,7 @@ class Store {
     }
     // Make relative URLs root-relative
     if (!url.match(/^https?:/) && url.indexOf('/') !== 0 ) {
-      url = this.conf.baseUrl.replace(/\/\+$/, '') + '/' + url
+      url = this.conf.baseURL.replace(/\/\+$/, '') + '/' + url
     }
 
     return url
@@ -370,7 +370,7 @@ class Store {
     opt.headers = this._headers(opt.headers)
     opt.processData = false
     if (opt.timeout !== null && !opt.timeout) {
-      opt.timeout = this.conf.defaultTimeout
+      opt.timeout = this.conf.timeout
     }
 
     if (opt.data) {

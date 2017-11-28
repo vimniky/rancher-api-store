@@ -5,7 +5,7 @@ export default function (options) {
   // See `https://github.com/mzabriskie/axios` for details
   const instance = axios.create(merge({
     timeout: 30000,
-    baseURL: '/',
+    // baseURL: '/',
     withCredentials: false,
     headers: {
       post: {

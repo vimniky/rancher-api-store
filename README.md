@@ -11,6 +11,10 @@ Storage adapter to [compatible APIs](http://github.com/rancher/api-spec).
   npm install rancher-api-store
 ```
 
+This assumes that you’re using npm package manager with a module bundler like Webpack or Browserify to consume CommonJS modules.
+
+If you don’t yet use npm or a modern module bundler, and would rather prefer a single-file UMD build that makes apiStore available as a global object.
+
 **Import**
 
 - ES6 module
@@ -26,6 +30,7 @@ import {Store, Resource} from 'rancher-api-store'
 var {Store, Resource} = require('rancher-api-store')
 
 ```
+
 
 - Browser global
 
