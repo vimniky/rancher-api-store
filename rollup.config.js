@@ -1,4 +1,5 @@
 import nodeResolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import uglify from 'rollup-plugin-uglify'
@@ -26,15 +27,17 @@ if (env === 'es' || env === 'cjs') {
 
 if (env === 'development' || env === 'production') {
   config.output = { format: 'umd' }
-  config.name = 'Rancher-api-store'
+  config.name = 'apiStore'
   config.plugins.push(
     nodeResolve({
-      jsnext: true
+      jsnext: true,
+      browser: true,
     }),
     babel({
       exclude: 'node_modules/**',
       plugins: ['external-helpers'],
     }),
+    commonjs(),
     replace({
       'process.env.NODE_ENV': JSON.stringify(env)
     })
