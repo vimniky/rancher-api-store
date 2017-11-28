@@ -1,6 +1,6 @@
 {
   "name": "rancher-api-store",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1",
   "description": "Rancher api adaptor",
   "main": "lib/index.js",
   "module": "es/index.js",
