@@ -53,7 +53,6 @@ class Store {
 
     let {http, ...rest} = opt
     this.conf = merge({
-      baseURL: '/v2-beta',
       timeout: 30000,
       defaultPageSize: 1000,
     }, rest)
@@ -232,14 +231,14 @@ class Store {
     type = normalizeType(type)
     const group = this._group(type)
     const groupMap = this._groupMap(type)
-    const cls = this.modelFor(type)
+    const Model = this.modelFor(type)
     group.concat(pojos.map(input=>  {
       // Schemas are special
       if (type === 'schema') {
         input._id = input.id
         input.id = normalizeType(input.id)
       }
-      const obj =  new cls.constructor(input)
+      const obj =  new Model(input)
       groupMap[obj.id] = obj
       return obj
     }))
@@ -342,20 +341,6 @@ class Store {
         })
     }
   }
-  normalizeUrl(url, includingAbsolute = false) {
-    const origin = window.location.origin
-
-    // Make absolute URLs to ourselves root-relative
-    if (includingAbsolute && url.indexOf(origin) === 0) {
-      url = url.substr(origin.length)
-    }
-    // Make relative URLs root-relative
-    if (!url.match(/^https?:/) && url.indexOf('/') !== 0 ) {
-      url = this.conf.baseURL.replace(/\/\+$/, '') + '/' + url
-    }
-
-    return url
-  }
   _headers(perRequest) {
     const out = {
       'Accept': 'application/json',
@@ -366,13 +351,7 @@ class Store {
     return out
   }
   rawRequest(opt) {
-    opt.url = this.normalizeUrl(opt.url)
     opt.headers = this._headers(opt.headers)
-    opt.processData = false
-    if (opt.timeout !== null && !opt.timeout) {
-      opt.timeout = this.conf.timeout
-    }
-
     if (opt.data) {
       if (!opt.contentType) {
         opt.contentType = 'application/json'
@@ -446,7 +425,6 @@ class Store {
   }
   // Makes an AJAX request that resolves to a resource model
   request(opt) {
-    opt.url = this.normalizeUrl(opt.url)
     opt.depaginate = opt.depaginate !== false
 
     if (this.mungeRequest) {

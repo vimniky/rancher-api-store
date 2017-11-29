@@ -24,7 +24,7 @@ import {Store, Resource} from 'rancher-api-store'
 
 ```
 
-- CommonJS 
+- CommonJS
 
 ```js
 var {Store, Resource} = require('rancher-api-store')
@@ -51,8 +51,7 @@ var {Store, Resource} = require('rancher-api-store')
 
   # link
   cd rancher-api-store && npm link
-  cd yoru-project & npm link rancher-api-store
-  
+  cd yoru-project && npm link rancher-api-store
 ```
 
 **Build**

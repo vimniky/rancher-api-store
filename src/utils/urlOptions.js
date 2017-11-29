@@ -1,4 +1,4 @@
-export default function urlOptions(url, opt = {},cls) {
+export default function urlOptions(url, opt = {}, Model) {
   if (opt.filter) {
     const keys = Object.keys(opt.filter)
     keys.forEach(function(key) {
@@ -23,31 +23,31 @@ export default function urlOptions(url, opt = {},cls) {
     }
   }
 
-  if (cls && cls.constructor.alwaysInclude) {
-    include.concat(cls.constructor.alwaysInclude)
+  if (Model && Model.constructor.alwaysInclude) {
+    include.concat(Model.constructor.alwaysInclude)
   }
 
   include.forEach(function(key) {
-    url += (url.indexOf('?') >= 0 ? '&' : '?') + 'include=' + encodeURIComponent(key);
+    url += (url.indexOf('?') >= 0 ? '&' : '?') + 'include=' + encodeURIComponent(key)
   });
   // End: Include
 
   // Limit
   let limit = opt.limit
-  if (!limit && cls) {
+  if (!limit && Model) {
     // todo
-    limit = cls.constructor.defaultLimit
+    limit = Model.constructor.defaultLimit
   }
 
   if (limit) {
-    url += (url.indexOf('?') >= 0 ? '&' : '?') + 'limit=' + limit;
+    url += (url.indexOf('?') >= 0 ? '&' : '?') + 'limit=' + limit
   }
   // End: Limit
 
   // Sort
   let sortBy = opt.sortBy
-  if ( !sortBy && cls ) {
-    sortBy = cls.constructor.defaultSortBy
+  if (!sortBy && Model) {
+    sortBy = Model.constructor.defaultSortBy
   }
 
   if (sortBy) {
@@ -55,8 +55,8 @@ export default function urlOptions(url, opt = {},cls) {
   }
 
   let orderBy = opt.sortOrder
-  if ( !orderBy && cls ) {
-    orderBy = cls.constructor.defaultSortOrder
+  if (!orderBy && Model) {
+    orderBy = Model.constructor.defaultSortOrder
   }
 
   if (orderBy) {
