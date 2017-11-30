@@ -52,10 +52,12 @@ class Store {
     Store.__stores[name] = this
 
     let {http, ...rest} = opt
-    this.conf = merge({
-      timeout: 30000,
-      defaultPageSize: 1000,
-    }, rest)
+
+    this.header = {}
+
+    Object.entries(rest).forEach(([k, v]) => {
+      this[k] = v
+    })
 
     if (!http) {
       http = createHttp()
@@ -323,7 +325,7 @@ class Store {
     type = normalizeType(type)
     opt.depaginate = opt.depaginate !== false
     if (!id && !opt.limit) {
-      opt.limit = this.conf.defaultPageSize;
+      opt.limit = this.defaultPageSize;
     }
     if (!type) {
       return Promise.reject('type not specified')
@@ -362,22 +364,19 @@ class Store {
       'Accept': 'application/json',
       'Content-type': 'application/json',
     }
-    merge(out, Store.headers, this.conf.headers, perRequest)
+    merge(out, Store.headers, this.headers, perRequest)
     return out
   }
   rawRequest(opt) {
     opt.headers = this._headers(opt.headers)
     if (opt.data) {
-      if (!opt.contentType) {
-        opt.contentType = 'application/json'
-      }
       if (opt.data instanceof Serializable) {
         opt.data = JSON.stringify(opt.data.serialize())
       } else if (typeof opt.data === 'object') {
         opt.data = JSON.stringify(opt.data)
       }
     }
-    return this.http.request(opt.url, opt)
+    return this.http.request(opt)
   }
   _requestSuccess(response, opt) {
     // 204 not content
@@ -448,13 +447,13 @@ class Store {
 
     return this.rawRequest(opt).then(res => {
       return this._requestSuccess(res, opt)
+    }).catch(error => {
+      return this._requestFailed(error, opt)
     })
-    // todo
-    //   .catch(error => {
-    //   return this._requestFailed(error, opt)
-    // })
   }
+
   _findWithUrl(url, type, opt) {
+    console.log('---------url', url)
     const queue = this._state.findQueue
     const Model = this.modelFor(type)
     url = urlOptions(url, opt, Model)
@@ -584,12 +583,13 @@ class Store {
       opt = {applyDefaults: false}
     }
     let type = input.type
+    type = normalizeType(type)
     if (Array.isArray(input) ) {
       // Recurse over arrays
       return input.map(x => this._typeify(x, opt))
     }
 
-    type = normalizeType(type)
+    console.log('collection', '----------')
     if (type === 'collection') {
       return this.createCollection(input, opt)
     } else if (!type) {

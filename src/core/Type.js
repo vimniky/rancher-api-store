@@ -116,7 +116,7 @@ class Type extends Serializable {
       opt.headers = {}
     }
     const headers = {}
-    merge(headers, this.constructor.headers, this.headers, opt.headers)
+    merge(headers, this.constructor.headers, opt.headers)
     return this.store.request({...opt, headers})
   }
 
