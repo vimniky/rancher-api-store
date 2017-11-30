@@ -21,6 +21,14 @@ class Collection {
     })
   }
 
+  first() {
+    return this.content[0]
+  }
+
+  last() {
+    return this.content[this.content.length - 1]
+  }
+
   getAt(idx) {
     return this.content[idx]
   }
@@ -60,7 +68,7 @@ class Collection {
   depaginate(depth = 1) {
     const self = this
     const promise = new Promise((resolve, reject) => {
-      const next = self.pagination.next
+      const next = self.pagination && self.pagination.next
       if (next) {
         self.request({
           method: 'GET',
@@ -78,7 +86,7 @@ class Collection {
           self.push(obj)
         })
 
-        if (self.pagination.next) {
+        if (next) {
           resolve(self.depaginate(depth+1))
         }
         else {
