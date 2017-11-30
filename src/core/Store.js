@@ -102,12 +102,14 @@ class Store {
 
     if (typeof type === 'string') {
       this._modelMap[type] = model
+      return
     }
 
     if (typeof type === 'object') {
-      Object.entries().map(([k, v]) => {
+      Object.entries(type).map(([k, v]) => {
         this._modelMap[k] = v
       })
+      return
     }
   }
 
