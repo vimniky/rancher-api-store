@@ -1,4 +1,4 @@
-import {copyHeaders} from '../utils/applyHeaders'
+import merge from 'lodash/merge'
 import {normalizeType} from '../utils/normalize'
 
 class Collection {
@@ -50,16 +50,16 @@ class Collection {
     if (!opt.headers ) {
       opt.headers = {}
     }
-    const cls = this.store.modelFor(type)
-    if (cls && cls.constructor.alwaysInclude) {
+    const Model = this.store.modelFor(type)
+    if (Model && Model.alwaysInclude) {
       if (!opt.include) {
         opt.include = []
       }
-      opt.include.concat(cls.constructor.alwaysInclude)
+      opt.include.concat(Model.alwaysInclude)
     }
 
-    if (cls && cls.constructor.headers) {
-      copyHeaders(cls.constructor.headers, opt.headers)
+    if (Model && Model.headers) {
+      merge(Model.headers, opt.headers)
     }
 
     return this.store.request(opt)

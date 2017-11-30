@@ -23,8 +23,8 @@ export default function urlOptions(url, opt = {}, Model) {
     }
   }
 
-  if (Model && Model.constructor.alwaysInclude) {
-    include.concat(Model.constructor.alwaysInclude)
+  if (Model && Model.alwaysInclude) {
+    include.concat(Model.alwaysInclude)
   }
 
   include.forEach(function(key) {
@@ -36,7 +36,7 @@ export default function urlOptions(url, opt = {}, Model) {
   let limit = opt.limit
   if (!limit && Model) {
     // todo
-    limit = Model.constructor.defaultLimit
+    limit = Model.defaultLimit
   }
 
   if (limit) {
@@ -47,7 +47,7 @@ export default function urlOptions(url, opt = {}, Model) {
   // Sort
   let sortBy = opt.sortBy
   if (!sortBy && Model) {
-    sortBy = Model.constructor.defaultSortBy
+    sortBy = Model.defaultSortBy
   }
 
   if (sortBy) {
@@ -56,7 +56,7 @@ export default function urlOptions(url, opt = {}, Model) {
 
   let orderBy = opt.sortOrder
   if (!orderBy && Model) {
-    orderBy = Model.constructor.defaultSortOrder
+    orderBy = Model.defaultSortOrder
   }
 
   if (orderBy) {

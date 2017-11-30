@@ -141,7 +141,7 @@ class Type extends Serializable {
       throw new Error('Unknown link')
     }
 
-    url = urlOptions(url, opt)
+    url = urlOptions(url, opt, this.constructor)
 
     return this.request({
       method: 'GET',
