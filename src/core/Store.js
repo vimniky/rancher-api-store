@@ -1,7 +1,6 @@
 import merge from 'lodash/merge'
 import Serializable from './Serializable'
 import {normalizeType} from '../utils/normalize'
-import {applyHeaders} from '../utils/applyHeaders'
 import urlOptions from '../utils/urlOptions'
 import createHttp from '../utils/createHttp'
 
@@ -33,6 +32,7 @@ let count = 0
 
 class Store {
   static __stores = {}
+  static headers = {}
   constructor(name, opt) {
 
     if (typeof name ==='string') {
@@ -94,19 +94,33 @@ class Store {
     this._modelMap[type] = Model
     return Model
   }
+
   registerModel(type, model) {
     if (!this._modelMap) {
       this._modelMap = {}
     }
-    this._modelMap[type] = model
-  }
-  unRegisterModel(type) {
-    const _modelMap = this._modelMap
-    if (!_modelMap || !_modelMap[type]) {
-      return false
+
+    if (typeof type === 'string') {
+      this._modelMap[type] = model
     }
-    _modelMap[type] = null
-    return true
+
+    if (typeof type === 'object') {
+      Object.entries().map(([k, v]) => {
+        this._modelMap[k] = v
+      })
+    }
+  }
+
+  unRegisterModel(type) {
+    const modelMap = this._modelMap
+    if (typeof type === 'string') {
+      modelMap[type] = null
+    }
+    if (Array.isArray(type)) {
+      type.forEach(t => {
+        modelMap[t] = null
+      })
+    }
   }
 
   getById(type, id) {
@@ -346,8 +360,7 @@ class Store {
       'Accept': 'application/json',
       'Content-type': 'application/json',
     }
-    applyHeaders(this.conf.headers, out)
-    applyHeaders(perRequest, out)
+    merge(out, Store.headers, this.conf.headers, perRequest)
     return out
   }
   rawRequest(opt) {
@@ -447,9 +460,9 @@ class Store {
     // Collect Headers
     const newHeaders = {}
     if (Model && Model.headers) {
-      applyHeaders(Model.headers, newHeaders, true)
+      merge(newHeaders, Model.headers)
     }
-    applyHeaders(opt.headers, newHeaders, true)
+    merge(newHeaders, opt.headers)
     // End: Collect headers
 
     let later

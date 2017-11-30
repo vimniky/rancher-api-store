@@ -1,3 +1,4 @@
+import merge from 'lodash/merge'
 import Serializable from './Serializable'
 import {normalizeType} from '../utils/normalize'
 import {copyHeaders} from '../utils/applyHeaders'
@@ -115,11 +116,9 @@ class Type extends Serializable {
     if (!opt.headers) {
       opt.headers = {}
     }
-    copyHeaders(this.constructor.headers, opt.headers)
-    copyHeaders(this.headers, opt.headers)
-
-    console.log('---------type',opt)
-    return this.store.request(opt)
+    const headers = {}
+    merge(headers, this.constructor.headers, this.headers, opt.headers)
+    return this.store.request({...opt, headers})
   }
 
   followPagination(name) {
