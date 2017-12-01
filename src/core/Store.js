@@ -376,6 +376,13 @@ class Store {
         opt.data = JSON.stringify(opt.data)
       }
     }
+
+    const baseURL = opt.baseURL || this.baseURL || Store.baseURL
+
+    if (baseURL) {
+      opt.baseURL = baseURL
+    }
+
     return this.http.request(opt)
   }
   _requestSuccess(response, opt) {
@@ -453,7 +460,6 @@ class Store {
   }
 
   _findWithUrl(url, type, opt) {
-    console.log('---------url', url)
     const queue = this._state.findQueue
     const Model = this.modelFor(type)
     url = urlOptions(url, opt, Model)
@@ -589,7 +595,6 @@ class Store {
       return input.map(x => this._typeify(x, opt))
     }
 
-    console.log('collection', '----------')
     if (type === 'collection') {
       return this.createCollection(input, opt)
     } else if (!type) {
