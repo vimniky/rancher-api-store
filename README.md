@@ -27,7 +27,7 @@ import {Store, Resource} from 'rancher-api-store'
 - CommonJS
 
 ```js
-var {Store, Resource} = require('rancher-api-store')
+const {Store, Resource} = require('rancher-api-store')
 
 ```
 
@@ -51,7 +51,7 @@ var {Store, Resource} = require('rancher-api-store')
 
   # link
   cd rancher-api-store && npm link
-  cd yoru-project && npm link rancher-api-store
+  cd your-project && npm link rancher-api-store
 ```
 
 **Build**
@@ -84,6 +84,10 @@ import {Resource, Store} from 'rancher-api-store'
 
 // `Container` Model Should extend from the build-in `Resource` Model
 class Container extends Resource {
+  constructor(...args) {
+    super(...args)
+    // ....
+  }
   doSomething() {
   	// ...
   }
@@ -103,15 +107,12 @@ store.registerModel('container', Container)
 
 // If the `Container` Model is registered,
 // it will be used to create the corresponding instances,
-// if not a fallback build-in `Resource` Model will be used behind the scenes.
+// if not a, fallback build-in `Resource` Model will be used behind the scenes.
 store.find('container').then(container => {
 	container.doSomething()
 })
 
 ```
-
-## FQA
-
 
 ## API
 

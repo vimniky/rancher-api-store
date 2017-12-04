@@ -1,21 +1,10 @@
-class Serializable {
-  constructor(...args) {
-    // Properties to ignore
+const reservedKeys = [
+  'reservedKeys',
+  'includedKeys',
+  'store',
+]
 
-    this.reservedKeys = [
-      'reservedKeys',
-      'includedKeys',
-      'constructor',
-      'container',
-      'store',
-      'isInstance',
-      'concatenatedProperties',
-      'cache',
-      'factoryCache',
-      'validationCache',
-      'store',
-    ]
-  }
+class Serializable {
   serialize(depth = 0) {
     let output
     if (depth > 10) {
@@ -63,7 +52,12 @@ class Serializable {
   }
 
   allKeys(withIncludes) {
-    const reserved = this.reservedKeys
+
+    const reserved = [
+      ...reservedKeys,
+      ...(this.constructor.reservedKeys || []),
+      ...(this.reservedKeys || [])
+    ]
 
     let alwaysIncluded = []
     if (withIncludes === false) {

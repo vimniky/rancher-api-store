@@ -8,11 +8,12 @@ class Collection {
     })
   }
 
+  static reservedKeys = ['content']
+
   constructor(opt) {
     Object.keys(opt).forEach(key => {
       this[key] = opt[key]
     })
-    this.reservedKeys =  ['content']
   }
 
   getById(id) {
