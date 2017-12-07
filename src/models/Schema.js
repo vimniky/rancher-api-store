@@ -33,7 +33,7 @@ class Schema extends Resource {
     super(...args)
   }
   getFieldNames() {
-    return Object.keys(this.get('resourceFields'))
+    return Object.keys(this.resourceFields)
   }
 
   typeifyFields() {
@@ -132,7 +132,7 @@ class Schema extends Resource {
   }
 
   referencedTypeFor(field) {
-    const obj = this.get('resourceFields')[field]
+    const obj = this.resourceFields[field]
     const type = obj.type;
     const match = type.match(/^reference\[([^\]]*)\]$/)
     if ( match ) {

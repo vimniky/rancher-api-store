@@ -216,7 +216,7 @@ class Type extends Serializable {
         return newData
       }
 
-      const newId = newData.get('id')
+      const newId = newData.id
       const newType = normalizeType(newData.type)
       if (!id && newId && type === newType) {
         // A new record was created.  Typeify will have put it into the store,
@@ -229,7 +229,7 @@ class Type extends Serializable {
         store._add(type, self)
 
         // And also for the base type
-        let baseType = self.get('baseType')
+        let baseType = self.baseType
         if (baseType) {
           baseType = normalizeType(baseType)
           if (baseType !== type) {
