@@ -115,6 +115,14 @@ class Store {
     }
   }
 
+  replaceModel(type, model) {
+    if (typeof type !== 'string') {
+      throw new Error(`type must be type of string, got ${type}`)
+    }
+    this._modelMap[type] = model
+    return this
+  }
+
   unRegisterModel(type) {
     const modelMap = this._modelMap
     if (typeof type === 'string') {
