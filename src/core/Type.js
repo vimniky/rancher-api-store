@@ -162,8 +162,11 @@ class Type extends Serializable {
     })
   }
 
+  doAction(name, opt = {}) {
+    if (name === 'delete' || name === 'remove') {
+      return this.delete(opt)
+    }
 
-  doAction(name, data, opt = {}) {
     const url = this.actionFor(name);
     if (!url) {
       return Promise.reject(new Error(`Unknown action: ${name}`))
@@ -171,9 +174,6 @@ class Type extends Serializable {
 
     opt.method = 'POST'
     opt.url = opt.url || url
-    if (data) {
-      opt.data = data
-    }
 
     // Note: The response object may or may not be this same object, depending on what the action returns.
     return this.request(opt)

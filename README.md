@@ -168,7 +168,7 @@ A resource is a model object representing a single resource in the API.
 * `.importLink(name [,options])`: Retrieves the link with the given `name` and assigns the response data as a property with the same `name`  (or you can use opttion.as to change the name) on the resource.  Returns a promise that resolves with the resource.
 
 * `.hasAction(name)`: Returns a boolean for whether this resource has an action with the given `name` or not.
-* `.doAction(name [,data])`: Performs the action given by `name`, optionally sending `data` and returns a promise that resolves with the response data.
+* `.doAction(name, opt)`: Performs the action given by `name`, optionally sending `data` and returns a promise that resolves with the response data.
 * `.save()`: Sends the resource to the API to persist it.  On success, adds the resource to the store if it wasn't already in there.  Returns a promise that resolves to the resource, and also updates the store record with the response data if it is provided.
 * `.delete()`: Sends a delete request to the API to remove a resource.  On success, the resource is removed from the store if it was in it.
 * `.serialize()`: Returns a plain JavaScript object representation of the resource.
