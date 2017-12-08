@@ -100,7 +100,7 @@ class Type extends Serializable {
   }
 
   actionFor(name) {
-    return this.actions[name]
+    return this.actionLinks[name]
   }
 
   hasAction(name) {
@@ -167,6 +167,10 @@ class Type extends Serializable {
       return this.delete(opt)
     }
 
+    if (name === 'save') {
+      this.save(opt)
+    }
+
     const url = this.actionFor(name);
     if (!url) {
       return Promise.reject(new Error(`Unknown action: ${name}`))
@@ -205,7 +209,7 @@ class Type extends Serializable {
       delete json[k]
     })
     delete json['links']
-    delete json['actions']
+    delete json['actionLinks']
 
     if (typeof opt.data === 'undefined') {
       opt.data = json
