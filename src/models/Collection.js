@@ -83,8 +83,8 @@ class Collection {
       function gotPage(body) {
         // Depaginate, got page
         self.pagination = body.pagination
-        body.forEach(function(obj) {
-          self.push(obj)
+        body.content.forEach(function(obj) {
+          self.content.push(obj)
         })
 
         if (next) {

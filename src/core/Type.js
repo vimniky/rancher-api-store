@@ -50,16 +50,22 @@ class Type extends Serializable {
 
   // unionArrays=true will append the new values to the existing ones instead of overwriting.
   merge(newData, unionArrays) {
-    newData.eachKeys((v, k) => {
-      if (newData.hasOwnProperty(k)) {
-        const curVal = this[k]
-        if (unionArrays && Array.isArray(curVal) && Array.isArray(v) ) {
-          curVal.concat(v)
-        } else {
-          this[k] = v
+    if (typeof newData.eachKeys === 'function') {
+      newData.eachKeys((v, k) => {
+        if (newData.hasOwnProperty(k)) {
+          const curVal = this[k]
+          if (unionArrays && Array.isArray(curVal) && Array.isArray(v) ) {
+            curVal.concat(v)
+          } else {
+            this[k] = v
+          }
         }
-      }
-    })
+      })
+    } else {
+      Object.entries(newData).forEach(([k, v]) => {
+        this[k] = v
+      })
+    }
 
     return this
   }
@@ -100,7 +106,7 @@ class Type extends Serializable {
   }
 
   actionFor(name) {
-    return this.actionLinks[name]
+    return this.actions[name]
   }
 
   hasAction(name) {
@@ -209,7 +215,7 @@ class Type extends Serializable {
       delete json[k]
     })
     delete json['links']
-    delete json['actionLinks']
+    delete json['actions']
 
     if (typeof opt.data === 'undefined') {
       opt.data = json
