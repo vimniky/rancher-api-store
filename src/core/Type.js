@@ -9,6 +9,7 @@ class Type extends Serializable {
       this[k] = v
     })
   }
+
   constructor(input = {}) {
     super()
     Object.entries(input).forEach(([key, value]) => {
@@ -22,8 +23,9 @@ class Type extends Serializable {
   }
 
   getSchema() {
-    return this.store.getById('schema', this.type);
+    return this.store.getById('schema', this.type)
   }
+
   optionsFor(field) {
     const s = this.getSchema()
     if (!s) {
@@ -83,7 +85,7 @@ class Type extends Serializable {
       if (newKeys.indexOf(k) === -1 && !this.hasLink(k)) {
         this[k] = undefined
       }
-    });
+    })
 
     return this
   }
@@ -177,7 +179,7 @@ class Type extends Serializable {
       this.save(opt)
     }
 
-    const url = this.actionFor(name);
+    const url = this.actionFor(name)
     if (!url) {
       return Promise.reject(new Error(`Unknown action: ${name}`))
     }
@@ -202,7 +204,7 @@ class Type extends Serializable {
     } else {
       // Create
       if (!type) {
-        return Promise.reject(new Error('Cannot create record without a type'));
+        return Promise.reject(new Error('Cannot create record without a type'))
       }
 
       opt.method = opt.method || 'POST'
@@ -272,7 +274,7 @@ class Type extends Serializable {
   }
   reload(opt = {}) {
     if (!this.hasLink('self')) {
-      return Promise.reject('Resource has no self link');
+      return Promise.reject('Resource has no self link')
     }
 
     let url = this.linkFor('self')

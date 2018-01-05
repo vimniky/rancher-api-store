@@ -33,6 +33,7 @@ let count = 0
 class Store {
   static __stores = {}
   static headers = {}
+
   constructor(name, opt) {
 
     if (typeof name ==='string') {
@@ -116,9 +117,6 @@ class Store {
   }
 
   replaceModel(type, model) {
-    if (typeof type !== 'string') {
-      throw new Error(`type must be type of string, got ${type}`)
-    }
     this._modelMap[type] = model
     return this
   }
@@ -235,6 +233,7 @@ class Store {
       entries.clear()
     }
   }
+
   // Add a record instance of [type] to cache
   _add(type, obj) {
     type = normalizeType(type)
@@ -247,6 +246,7 @@ class Store {
       obj.wasAdded()
     }
   }
+
   // Add a lot of instances of the same type quickly.
   //  - There must be a model for the type already defined.
   //  - Instances cannot contain any nested other types (e.g. include or subtypes),
@@ -269,6 +269,7 @@ class Store {
       return obj
     }))
   }
+
   // Remove a record of [type] from cache, given the id or the record instance.
   _remove(type, obj) {
     type = normalizeType(type)
@@ -283,9 +284,11 @@ class Store {
       obj.wasRemoved()
     }
   }
+
   isCacheable(opt) {
     return !opt || (opt.depaginate && !opt.filter && !opt.include);
   }
+
   // Forget about all the resources that hae been previously remembered.
   reset() {
     const cache = this._state.cache
@@ -311,6 +314,7 @@ class Store {
     this._state.findQueue = {}
     this._state.missingMap = {}
   }
+
   resetType(type) {
     type = normalizeType(type)
     const group = this._group(type)
@@ -318,6 +322,7 @@ class Store {
     this._state.cacheMap[type] = {}
     group.clear()
   }
+
   // Asynchronous, returns promise.
   // find(type[,null, opt]): Query API for all records of [type]
   // find(type,id[,opt]): Query API for record [id] of [type]
@@ -333,7 +338,7 @@ class Store {
     type = normalizeType(type)
     opt.depaginate = opt.depaginate !== false
     if (!id && !opt.limit) {
-      opt.limit = this.defaultPageSize;
+      opt.limit = this.defaultPageSize
     }
     if (!type) {
       return Promise.reject('type not specified')
@@ -367,6 +372,7 @@ class Store {
         })
     }
   }
+
   _headers(perRequest) {
     const out = {
       'Accept': 'application/json',
@@ -375,6 +381,7 @@ class Store {
     merge(out, Store.headers, this.headers, perRequest)
     return out
   }
+
   rawRequest(opt) {
     opt.headers = this._headers(opt.headers)
     if (opt.data) {
@@ -393,6 +400,7 @@ class Store {
 
     return this.http.request(opt)
   }
+
   _requestSuccess(response, opt) {
     // 204 not content
     if (response.status === 204) {
@@ -426,6 +434,7 @@ class Store {
       return response.data
     }
   }
+
   _requestFailed(error, opt = {}) {
     let data
     if (!error.data) {
@@ -452,6 +461,7 @@ class Store {
       return Promise.reject(data);
     }
   }
+
   // Makes an AJAX request that resolves to a resource model
   request(opt) {
     opt.depaginate = opt.depaginate !== false
@@ -527,6 +537,7 @@ class Store {
     }
     return later
   }
+
   _finishFind(key, result, action) {
     const queue = this._state.findQueue
     const promises = queue[key]
@@ -542,6 +553,7 @@ class Store {
     }
     delete queue[key]
   }
+
   // Create a collection: {key: 'data'}
   createCollection(input, opt) {
     const dataKey = (opt && opt.key ? opt.key : 'data')
@@ -556,6 +568,7 @@ class Store {
     })
     return output
   }
+
   // Create a record: {applyDefaults: false}
   createRecord(data, opt = {}) {
     const type = normalizeType(opt.type || data.type)
@@ -587,6 +600,7 @@ class Store {
     Object.defineProperty(output, 'store', {enumerable: false, value: this, configurable: true})
     return output
   }
+
   // Turn a POJO into a Model: {updateStore: true}
   _typeify(input, opt = null) {
     if ( !input || typeof input !== 'object') {

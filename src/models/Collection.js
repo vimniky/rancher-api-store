@@ -22,11 +22,11 @@ class Collection {
     })
   }
 
-  first() {
+  get first() {
     return this.content[0]
   }
 
-  last() {
+  get last() {
     return this.content[this.content.length - 1]
   }
 
@@ -38,7 +38,7 @@ class Collection {
     return this.content[method](...args)
   }
 
-  length() {
+  get length() {
     return this.content.length
   }
 
