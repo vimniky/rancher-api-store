@@ -35,7 +35,6 @@ class Store {
   static headers = {}
 
   constructor(name, opt) {
-
     if (typeof name ==='string') {
       const catchedStore = Store.__stores[name]
       if(catchedStore) {

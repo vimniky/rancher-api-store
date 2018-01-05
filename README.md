@@ -1,7 +1,7 @@
 Rancher API Store
 ===============
 
-Storage adapter to [API SPEC compatible APIs](http://github.com/rancher/api-spec).
+Storage adapter to [API SPEC compatible APIs](https://github.com/rancher/api-spec/blob/master/specification.md).
 
 ## Usage
 
@@ -184,13 +184,13 @@ A resource is a model object representing a single resource in the API.
 ### Collection
 A collection is a model object representing an array of resources in the API.  It is an ArrayProxy that proxies array requests to the `data` elements of the collection, but collections are themselves resources that may have links and actions themselves that you can use (as a resource, above).
 
-**properties**
+**Properties**
 
 * `length` Returns the length of the collection.
 * `first` Returns the first resource of the collection.
-* `last` Returns the first resource of the collection.
+* `last` Returns the last resource of the collection.
 
-**methods**
+**Methods**
 
 * `getById(id)` Returns the resource with the passed id or undefined if not found.
 
