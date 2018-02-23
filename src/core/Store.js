@@ -407,7 +407,7 @@ class Store {
     }
     if (response.data && typeof response.data === 'object') {
       response = this._typeify(response.data)
-      delete response.data
+
       Object.defineProperty(response, 'response', {value: response, configurable: true})
 
       // Note which keys were included in each object
