@@ -329,7 +329,7 @@ class Store {
   //  filter: Filter by fields, e.g. {field: value, anotherField: anotherValue} (default: none)
   //  include: Include link information, e.g. ['link', 'anotherLink'] (default: none)
   //  forceReload: Ask the server even if the type+id is already in cache. (default: false)
-  //  limit: Number of reqords to return per page (default: 1000)
+  //  limit: Number of records to return per page (default: 1000)
   //  depaginate: If the response is paginated, retrieve all the pages. (default: true)
   //  headers: Headers to send in the request (default: none).  Also includes ones specified in the model constructor.
   //  url: Use this specific URL instead of looking up the URL for the type/id.  This should only be used for bootstrap
