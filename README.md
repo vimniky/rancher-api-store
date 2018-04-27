@@ -36,7 +36,7 @@ const {Store, Resource} = require('rancher-api-store')
 
 ```html
   <script src="path/to/rancher-api-store/dist/index.js" ></script>
-  
+
   <script>
   	console.log(apiStore.Store)
   </script>
@@ -98,7 +98,7 @@ import {Store} from 'rancher-api-store'
 
 const store = new Store('userStore', {
   baseUrl: '/v2-bata',
-  
+
   // whether schemas should be loaded upon store niitalization
   loadSchemas: true, // default is false
 })
@@ -200,4 +200,34 @@ A collection is a model object representing an array of resources in the API.  I
 
 * `.serialize()`: Returns a plain JavaScript array representation of the collection.
 
+### Socket
+A Socket is a class that create a websocket, it support listen readyState change and reconnet.
 
+**Properties**
+
+* `socket` Return the origin socket that using WebSocket created.
+
+**Methods**
+
+* `constructor(url [, option])` create a socket with `url`.
+
+* `on(event, callback)` listen a event and perform callback when event is triggered.
+
+* `close()` close socket.
+
+* `reConnect()` reconnect socket.
+
+**Table**
+
+| option    | description                                                                                    |
+| ---       | ---                                                                                            |
+| token     | token will be carried as a queryparam in url, rancher server is required token to communicate  |
+| reConnect | enable  reConnect                                                                              |
+
+| Event         | description            |
+| ---           | ---                    |
+| ready         | WebSocket onopen       |
+| error         | WebSocket onerror      |
+| onclose       | WebSocket onclose      |
+| onmessage     | WebSocket onmessage    |
+| onStateChange | when readyState change |

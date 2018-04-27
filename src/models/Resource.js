@@ -76,7 +76,6 @@ class Resource extends Type {
         // @TODO something...
       } else if (val && typeof val.validationErrors === 'function') {
         // embedded schema type
-        console.log(val, 'poi')
         errors.pushObjects(val.validationErrors())
       } else if (field.type === 'float' && typeof val === 'string') {
         // Coerce strings to floats
@@ -115,7 +114,6 @@ class Resource extends Type {
           (Array.isArray(val) && len === 0)
         )
       ) {
-        console.log(field, val)
         errors.push(`validation.required ${displayKey}`)
         continue
       }
@@ -124,23 +122,19 @@ class Resource extends Type {
       validateChars(val, field, displayKey, errors)
     }
 
-    if (field.type === 'dnslLabel' || field.type === 'hostname') {
+    if (field.type === 'dnsLabel' || field.type === 'hostname') {
       const tolower = (val || '').toLowerCase()
       if (tolower !== val) {
         val = tolower
         this[key] = val
       }
 
-      if (field.type === 'dnslLabel') {
+      if (field.type === 'dnsLabel') {
         validateDnsLabel(val, displayKey, errors)
       } else if (field.type === 'hostname') {
         validateHostname(val, displayKey, errors)
       }
     }
-
-    console.log(this, '000000')
-
-    console.log(errors, 'errors')
 
     return errors
   }
@@ -160,7 +154,7 @@ class Resource extends Type {
       } else if (Array.isArray(val)) {
         val.forEach((v, idx) => {
           var out = recurse(v, depth + 1)
-          if (val.objectAt(idx) !== out) {
+          if (val[idx] !== out) {
             val.replace(idx, 1, out)
           }
         })

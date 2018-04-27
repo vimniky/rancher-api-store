@@ -4,6 +4,7 @@ import Schema from './models/Schema'
 import Error from './models/Error'
 import Collection from './models/Collection'
 import createHttp from './utils/createHttp'
+import Socket from './core/Socket'
 
 export {
   createHttp,
@@ -12,4 +13,5 @@ export {
   Schema,
   Error,
   Collection,
+  Websocket,
 }
