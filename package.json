@@ -1,5 +1,5 @@
 {
-  "name": "rancher-api-store",
+  "name": "cnrancher-api-store",
   "version": "0.1.0",
   "description": "Rancher api adaptor",
   "main": "lib/index.js",
