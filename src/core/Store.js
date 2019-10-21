@@ -365,7 +365,7 @@ class Store {
     } else {
       // Otherwise lookup the schema for the type and generate the URL based on it.
       return this
-        .find('schema', type, {url: `schemas/${encodeURIComponent(type)}`})
+        .find('schema', type, {...opt, url: `schemas/${encodeURIComponent(type)}`})
         .then(schema => {
           const url = schema.linkFor('collection') + (id ? '/' + encodeURIComponent(id) : '')
           return this._findWithUrl(url, type, opt)
