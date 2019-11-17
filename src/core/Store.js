@@ -159,7 +159,7 @@ class Store {
     const type = normalizeType(name, this);
     const group = this._groupMap(type);
     return !!group;
-  },
+  }
 
   haveAll(type) {
     type = normalizeType(type)
