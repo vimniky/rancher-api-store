@@ -146,11 +146,20 @@ class Store {
 
   // Synchronously returns whether this exact record object is in the local cache
   hasRecord(obj) {
-    if (!obj) return false
+    if (!obj) {
+      return false
+    }
+
     const type = normalizeType(obj.type)
     const group = this._groupMap(type)
     return group[obj.id] === obj
   }
+
+  hasType(name) {
+    const type = normalizeType(name, this);
+    const group = this._groupMap(type);
+    return !!group;
+  },
 
   haveAll(type) {
     type = normalizeType(type)
